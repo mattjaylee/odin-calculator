@@ -8,16 +8,17 @@
     <body>
         <div class="calculator-container">
 
-            <div class="display">1234567890</div>
+            <div class="display">0</div>
 
             <div class="button-container"></div>
         </div>
         <script>
 
-            const buttonsArray = [7, 8, 9, '/', 4, 5, 6, '*', 1, 2, 3, '-', 0, '.', '=', '+']
-            let currentOperation;
+            const buttonsArray = [7, 8, 9, '/', 4, 5, 6, '*', 1, 2, 3, '-', 0, '.', '=', '+'];
+            let currentOperation = null;
 
-            const buttonContainer = document.querySelector('.button-container')
+            const display = document.querySelector('.display');
+            const buttonContainer = document.querySelector('.button-container');
 
             for (let i = 0; i < buttonsArray.length; i++) {
                 const button = document.createElement('div');
@@ -27,8 +28,16 @@
                 buttonContainer.appendChild(button);
             }
 
+            function updateDisplay(newDisplay) {
+                display.innerText = newDisplay;
+            }
+
             function buttonPress(event) {
-                console.log(typeof this.innerText);
+                if (!currentOperation) {
+                    currentOperation = this.innerText;
+                }
+                else currentOperation += this.innerText;
+                updateDisplay(currentOperation);
             }
 
             function add(a, b) {
