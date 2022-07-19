@@ -14,7 +14,7 @@
         </div>
         <script>
 
-            const buttonsArray = [7, 8, 9, '/', 4, 5, 6, '*', 1, 2, 3, '-', 0, '.', '=', '+'];
+            const buttonsArray = [7, 8, 9, '/', 4, 5, 6, '*', 1, 2, 3, '-', 0, '.', '=', '+', 'clear'];
             let currentOperation = null;
             const operatorArray = ['/', '*', '-', '+', '='];
             let operationCount = 0;
@@ -39,8 +39,11 @@
             }
 
             function buttonPress(event) {
-                console.log(currentOperation)
-                if (!currentOperation) {
+                if (this.innerText === 'clear') {
+                    currentOperation = '0';
+                    updateDisplay(currentOperation);
+                }
+                else if (!currentOperation || currentOperation === '0') {
                     currentOperation = this.innerText;
                     updateDisplay(currentOperation);
                 }
@@ -90,6 +93,10 @@
             function getFirstNum(operationString) {
                 subStringIndex = operationString.length;
                 return parseInt(operationString.slice(0, subStringIndex));
+            }
+
+            function clear() {
+
             }
 
             function evalCurrentOperation(operationString) {
