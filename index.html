@@ -20,7 +20,8 @@
             let operationCount = 0;
             let firstNum;
             let secondNum;
-            let subStringIndex
+            let subStringIndex;
+            let answer;
 
             const display = document.querySelector('.display');
             const buttonContainer = document.querySelector('.button-container');
@@ -38,6 +39,7 @@
             }
 
             function buttonPress(event) {
+                console.log(currentOperation)
                 if (!currentOperation) {
                     currentOperation = this.innerText;
                     updateDisplay(currentOperation);
@@ -45,14 +47,20 @@
                 else if (operatorArray.includes(this.innerText)) {
                     operationCount ++;
                     if (operationCount === 2 || this.innerText === '=') {
-                        let answer = evalCurrentOperation(currentOperation);
+                        answer = evalCurrentOperation(currentOperation);
                         currentOperation = answer.toString();
+                        firstNum = getFirstNum(currentOperation);
+                        if (this.innerText === '=') {
+                            operationCount = 0;
+                        }
+                        else {
+                            currentOperation += this.innerText;
+                            operationCount = 1;
+                        }
                         updateDisplay(currentOperation);
-                        operationCount = 0;
                         return;
                     }
-                    subStringIndex = currentOperation.length;
-                    firstNum = parseInt(currentOperation.slice(0, subStringIndex));
+                    firstNum = getFirstNum(currentOperation);
                     currentOperation += this.innerText;
                     updateDisplay(currentOperation);
                     
@@ -77,6 +85,11 @@
             }
             function operate(operator, a, b) {
                 return operator(a, b);
+            }
+
+            function getFirstNum(operationString) {
+                subStringIndex = operationString.length;
+                return parseInt(operationString.slice(0, subStringIndex));
             }
 
             function evalCurrentOperation(operationString) {
