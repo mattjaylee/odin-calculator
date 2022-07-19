@@ -16,6 +16,11 @@
 
             const buttonsArray = [7, 8, 9, '/', 4, 5, 6, '*', 1, 2, 3, '-', 0, '.', '=', '+'];
             let currentOperation = null;
+            const operatorArray = ['/', '*', '-', '+', '='];
+            let operationCount = 0;
+            let firstNum;
+            let secondNum;
+            let subStringIndex
 
             const display = document.querySelector('.display');
             const buttonContainer = document.querySelector('.button-container');
@@ -35,10 +40,28 @@
             function buttonPress(event) {
                 if (!currentOperation) {
                     currentOperation = this.innerText;
+                    updateDisplay(currentOperation);
                 }
-                else currentOperation += this.innerText;
-                updateDisplay(currentOperation);
-            }
+                else if (operatorArray.includes(this.innerText)) {
+                    operationCount ++;
+                    if (operationCount === 2 || this.innerText === '=') {
+                        let answer = evalCurrentOperation(currentOperation);
+                        currentOperation = answer.toString();
+                        updateDisplay(currentOperation);
+                        operationCount = 0;
+                        return;
+                    }
+                    subStringIndex = currentOperation.length;
+                    firstNum = parseInt(currentOperation.slice(0, subStringIndex));
+                    currentOperation += this.innerText;
+                    updateDisplay(currentOperation);
+                    
+                }
+                else {
+                    currentOperation += this.innerText;
+                    updateDisplay(currentOperation);
+                }   
+            }   
 
             function add(a, b) {
                 return a + b;
@@ -54,6 +77,25 @@
             }
             function operate(operator, a, b) {
                 return operator(a, b);
+            }
+
+            function evalCurrentOperation(operationString) {
+                secondNum = parseInt(operationString.slice(subStringIndex + 1))
+                let currentOperator = operationString.charAt(subStringIndex)
+                switch(currentOperator) {
+                    case '+':
+                        return add(firstNum, secondNum);
+                        break;
+                    case '-':
+                        return subtract(firstNum, secondNum);
+                        break;
+                    case '*':
+                        return multiply(firstNum, secondNum);
+                        break;
+                    case '/': 
+                        return divide(firstNum, secondNum);
+                        break;
+                }       
             }
         </script>
 
