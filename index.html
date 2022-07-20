@@ -92,7 +92,7 @@
 
             function getFirstNum(operationString) {
                 subStringIndex = operationString.length;
-                return parseInt(operationString.slice(0, subStringIndex));
+                return parseFloat(operationString.slice(0, subStringIndex));
             }
 
             function clear() {
@@ -100,7 +100,7 @@
             }
 
             function evalCurrentOperation(operationString) {
-                secondNum = parseInt(operationString.slice(subStringIndex + 1))
+                secondNum = parseFloat(operationString.slice(subStringIndex + 1))
                 let currentOperator = operationString.charAt(subStringIndex)
                 switch(currentOperator) {
                     case '+':
