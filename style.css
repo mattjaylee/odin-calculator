@@ -45,6 +45,14 @@ html {
     border-radius: 12px;
 }
 
+.divide, .multiply, .add, .subtract {
+    background-color: lightskyblue;
+}
+
+.equals {
+    background-color: #da6449;
+}
+
 .clear {
     flex: 0 1 23%;
     margin-left: auto;
